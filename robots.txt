@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://YOUR_GITHUB_ID.github.io/ipma-publishing/sitemap.xml
+Sitemap: https://ipma1822-png.github.io/ipma-publishing/sitemap.xml
