@@ -22,7 +22,7 @@ Core identity:
 
 ## 2. Current baseline confirmed on main
 
-The current repository already contains the core publishing information architecture:
+The repository contains the core publishing information architecture:
 
 - `/about/`
 - `/catalog/`
@@ -43,7 +43,7 @@ The current repository already contains the core publishing information architec
 - `assets/js/verify.js`
 - `assets/css/style.css`
 
-The catalog is already data-driven from `data/books.json` and Verification is already data-driven from `data/verify.json`.
+The catalog remains data-driven from `data/books.json` and Verification remains data-driven from `data/verify.json`.
 
 ## 3. Existing functions that must be preserved
 
@@ -53,7 +53,7 @@ The catalog is already data-driven from `data/books.json` and Verification is al
 4. Direct Verification query format `/verification/?code=...`
 5. ISBN / Edition / Version guidance
 6. Series / Authors / Distribution / Resources / News / Media / Contact routes
-7. Responsive layout and current navigation until replacement is verified
+7. Responsive layout
 8. Existing static-site deployment compatibility
 
 ## 4. Confirmed weaknesses / upgrade targets
@@ -71,58 +71,52 @@ Several important assets currently exist as 1-byte placeholder files, including:
 
 These must be replaced only when approved production assets are available.
 
-### B. Publishing identity is archive-first, not eBook-first
+### B. Publishing identity was archive-first, not eBook-first
 
-The current homepage message emphasizes publishing system / archive / verification. The new homepage should lead with eBooks and digital library discovery, while keeping Archive, ISBN, Edition, Version and Verification as trust infrastructure.
+The homepage has now been upgraded to lead with eBooks and Digital Library discovery, while Archive, ISBN, Edition, Version and Verification remain the trust infrastructure.
 
-### C. Catalog data model is too small for long-term digital publishing
+### C. Catalog data model must grow safely
 
 Current book data supports title, subtitle, series, category, format, edition, version, publish date, publisher, cover, summary, TOC and verification example.
 
-Future-safe fields should be added gradually, without breaking old records:
+The Digital Library UI now safely recognizes optional future fields without requiring existing records to change:
 
 - `isbn`
 - `language`
-- `author_ids`
+- `author` / `authors`
 - `keywords`
 - `status`
 - `featured`
 - `new_release`
-- `ebook_url`
-- `preview_url`
-- `purchase_url`
-- `download_policy`
-- `rights`
-- `updated_at`
+- future eBook access fields
 
 No ISBN or publication facts may be invented. Real source data must be used.
 
-### D. Content is currently too internally oriented
+### D. Public content should remain reader-oriented
 
-Some public-facing pages expose operational notes such as JSON file management instructions and internal publishing philosophy. Public pages should be rewritten for readers/authors/institutions. Developer/operation notes should move to documentation.
+Developer and operating notes should not be exposed as primary public content. Public pages should speak to readers, authors, institutions and partners.
 
-### E. Mobile navigation needs a future redesign
+### E. Mobile navigation
 
-The current navigation wraps many pill buttons. It is functional, but as the eBook catalog grows it should become a simpler responsive navigation with clear primary actions.
+The homepage and Digital Library now use responsive navigation and mobile-safe layouts. Further simplification can happen after more real content is loaded.
 
 ### F. Data import tool exists but folder naming is irregular
 
-An Excel-to-JSON utility exists at `ools/xlsx_to_json.py`. It expects `ipma_data.xlsx` and generates books and verification JSON. This is useful infrastructure and should be preserved. Folder cleanup should happen only after usage and deployment references are checked.
+An Excel-to-JSON utility exists at `ools/xlsx_to_json.py`. It expects `ipma_data.xlsx` and generates books and verification JSON. This infrastructure is preserved. Folder cleanup should happen only after usage and deployment references are checked.
 
-## 5. New public information architecture
+## 5. Public information architecture
 
-Recommended main hierarchy:
+Primary hierarchy:
 
 1. HOME
 2. eBOOKS / DIGITAL LIBRARY
-3. CATEGORIES
-4. SERIES
-5. AUTHORS
-6. ISBN & PUBLICATION INFO
-7. VERIFICATION
-8. SUBMISSIONS
-9. ABOUT
-10. CONTACT
+3. SERIES
+4. AUTHORS
+5. ISBN & PUBLICATION INFO
+6. VERIFICATION
+7. SUBMISSIONS
+8. ABOUT
+9. CONTACT
 
 Secondary links:
 
@@ -132,26 +126,22 @@ Secondary links:
 - Media
 - Imprints
 
-## 6. Homepage target structure
+## 6. Homepage structure
 
 1. Premium digital publishing HERO
-2. Featured eBooks
-3. New releases
-4. Browse by category
-5. Digital Library introduction
-6. Global Publishing / multilingual expansion
-7. ISBN + Verification trust section
-8. Author / manuscript submission
-9. Archive / institutional distribution
-10. Footer
-
-The homepage must show books first and system explanations second.
+2. eBook / Digital Library entry
+3. Publishing fields and categories
+4. Global knowledge positioning
+5. ISBN + Verification trust section
+6. Author / manuscript submission
+7. Secondary archive / distribution links
+8. Footer
 
 ## 7. Image asset plan
 
-Image production is handled in a separate image-only workflow. This repository should prepare predictable paths for those assets.
+Image production is handled in a separate image-only workflow.
 
-Recommended production paths:
+Prepared production paths:
 
 - `assets/images/publishing/hero-main.webp`
 - `assets/images/publishing/digital-library.webp`
@@ -181,35 +171,44 @@ Status: COMPLETE
 - Preservation rules defined
 
 ### PHASE 2 — eBook-first identity and homepage
-Status: NEXT
+Status: COMPLETE
 
-- Rewrite homepage information hierarchy
-- Keep all existing routes working
-- Introduce Digital Library / eBook-first messaging
-- Add production image hooks with safe fallbacks
-- Remove public developer notes from homepage
-- Improve mobile-first header/navigation without breaking route access
+- Homepage information hierarchy rewritten
+- Existing routes preserved
+- Digital Library / eBook-first messaging introduced
+- Production image paths prepared with CSS fallback visuals
+- Public developer notes removed from homepage
+- Mobile-first header/navigation improved
 
 ### PHASE 3 — Digital Library catalog upgrade
+Status: COMPLETE
 
-- Search/filter/sort
-- Category browsing
-- Featured/new-release states
-- ISBN/language/author metadata support
-- Safe compatibility with old book records
+- Search by title / subtitle / series / category / optional metadata
+- Category filter
+- Format filter
+- Sort by newest / title / series
+- Responsive digital-library book cards
+- Featured/new-release state support when future records provide those fields
+- Optional ISBN/language/author/keyword metadata support
+- Safe compatibility with current legacy book records
+- Empty-result and load-error states
+- Public-facing internal JSON operating note removed from catalog
 
 ### PHASE 4 — Book detail upgrade
+Status: NEXT
 
+- Premium book detail layout
 - Cover
 - Metadata
-- ISBN
+- ISBN when real data exists
 - Publication date
-- Author
+- Author when real data exists
 - Description
 - TOC
-- Preview
-- eBook access/purchase link
+- Preview link support
+- eBook access/purchase link support
 - Verification link
+- Remove internal/developer notes from public book detail page
 
 ### PHASE 5 — Real publication data migration
 
@@ -252,4 +251,4 @@ Do not fabricate missing values.
 
 ## 10. Immediate next action
 
-Proceed to PHASE 2: eBook-first homepage and identity upgrade, using the current main branch as the baseline and preserving every confirmed working route and data-driven function.
+Proceed to PHASE 4: upgrade the book detail experience while keeping the current `?id=` route and all existing catalog/verification links compatible.
