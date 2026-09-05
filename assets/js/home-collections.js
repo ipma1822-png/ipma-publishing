@@ -1,0 +1,10 @@
+(function(){
+  const featuredGrid=document.querySelector('#featuredPublications');
+  if(!featuredGrid)return;
+  const CSV_URL='./data/official-publications.csv';
+  const featuredTitles=['DOUBLE CROSS','경찰무도의 본질과 미래','ACTS MISSION ALLIANCE'];
+  const esc=s=>String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
+  function parseCsv(text){const rows=[];let row=[],cell='',quoted=false;for(let i=0;i<text.length;i++){const ch=text[i];if(quoted){if(ch==='"'&&text[i+1]==='"'){cell+='"';i++;}else if(ch==='"')quoted=false;else cell+=ch;}else{if(ch==='"')quoted=true;else if(ch===','){row.push(cell);cell='';}else if(ch==='\n'){row.push(cell.replace(/\r$/,''));rows.push(row);row=[];cell='';}else cell+=ch;}}if(cell.length||row.length){row.push(cell);rows.push(row);}if(!rows.length)return[];const headers=rows.shift().map(v=>v.trim());return rows.filter(r=>r.some(v=>String(v).trim())).map(r=>{const o={};headers.forEach((h,i)=>o[h]=String(r[i]??'').trim());return o;});}
+  function card(rec,index){const href=`./catalog/official/?isbn=${encodeURIComponent(rec.isbn||'')}`;return `<a class="featured-publication" href="${href}"><div class="featured-number">FEATURED 0${index+1}</div><div><p class="kicker">${esc(rec.category||'OFFICIAL PUBLICATION')}</p><h3>${esc(rec.title)}</h3><p class="small">${esc(rec.series||'IPMA Publishing')}</p></div><div class="featured-meta"><span><b>ISBN</b> ${esc(rec.isbn)}</span><span><b>발행일</b> ${esc(rec.publish_date)}</span><span><b>출판/저작</b> ${esc(rec.publisher_copyright)}</span></div><div class="featured-link">공식 출판정보 보기 →</div></a>`;}
+  fetch(CSV_URL,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('load');return r.text();}).then(text=>{const records=parseCsv(text);const selected=featuredTitles.map(title=>records.find(r=>r.title===title)).filter(Boolean);if(!selected.length)throw new Error('notfound');featuredGrid.innerHTML=selected.map(card).join('');}).catch(()=>{featuredGrid.innerHTML='<div class="featured-loading">대표 출판물 정보를 불러오지 못했습니다. DIGITAL LIBRARY에서 전체 출판물을 확인해 주세요.</div>';});
+})();
