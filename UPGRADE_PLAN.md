@@ -42,6 +42,9 @@ The repository contains the core publishing information architecture:
 - `assets/js/catalog.js`
 - `assets/js/verify.js`
 - `assets/css/style.css`
+- `assets/css/book-detail.css`
+- `ools/xlsx_to_json.py`
+- `PUBLISHING_DATA_GUIDE.md`
 
 The catalog remains data-driven from `data/books.json` and Verification remains data-driven from `data/verify.json`.
 
@@ -73,22 +76,26 @@ These must be replaced only when approved production assets are available.
 
 ### B. Publishing identity was archive-first, not eBook-first
 
-The homepage has now been upgraded to lead with eBooks and Digital Library discovery, while Archive, ISBN, Edition, Version and Verification remain the trust infrastructure.
+The homepage now leads with eBooks and Digital Library discovery, while Archive, ISBN, Edition, Version and Verification remain the trust infrastructure.
 
 ### C. Catalog data model must grow safely
 
-Current book data supports title, subtitle, series, category, format, edition, version, publish date, publisher, cover, summary, TOC and verification example.
-
-The Digital Library UI now safely recognizes optional future fields without requiring existing records to change:
+The Digital Library and Book Detail pages now safely recognize optional future fields without requiring legacy records to change:
 
 - `isbn`
 - `language`
 - `author` / `authors`
+- `author_ids`
 - `keywords`
 - `status`
 - `featured`
 - `new_release`
-- future eBook access fields
+- `ebook_url`
+- `preview_url`
+- `purchase_url`
+- `download_policy`
+- `rights`
+- `updated_at`
 
 No ISBN or publication facts may be invented. Real source data must be used.
 
@@ -98,11 +105,11 @@ Developer and operating notes should not be exposed as primary public content. P
 
 ### E. Mobile navigation
 
-The homepage and Digital Library now use responsive navigation and mobile-safe layouts. Further simplification can happen after more real content is loaded.
+The homepage, Digital Library and Book Detail now use responsive mobile-safe layouts. Further simplification can happen after more real content is loaded.
 
-### F. Data import tool exists but folder naming is irregular
+### F. Data import tool folder naming is irregular
 
-An Excel-to-JSON utility exists at `ools/xlsx_to_json.py`. It expects `ipma_data.xlsx` and generates books and verification JSON. This infrastructure is preserved. Folder cleanup should happen only after usage and deployment references are checked.
+The Excel-to-JSON utility remains at `ools/xlsx_to_json.py`. The path is irregular, but it is intentionally left untouched during the live upgrade to avoid breaking existing workflows. Cleanup can happen after all references are checked.
 
 ## 5. Public information architecture
 
@@ -195,24 +202,39 @@ Status: COMPLETE
 - Public-facing internal JSON operating note removed from catalog
 
 ### PHASE 4 — Book detail upgrade
-Status: NEXT
+Status: COMPLETE
 
 - Premium book detail layout
-- Cover
-- Metadata
-- ISBN when real data exists
+- Cover and fallback cover
+- Metadata block
+- ISBN display only when real data exists
 - Publication date
-- Author when real data exists
+- Author display only when real data exists
 - Description
 - TOC
 - Preview link support
-- eBook access/purchase link support
+- eBook access link support
+- Purchase / use link support
 - Verification link
-- Remove internal/developer notes from public book detail page
+- Responsive desktop/mobile layout
+- Internal/developer notes removed from public-facing detail experience
 
-### PHASE 5 — Real publication data migration
+### PHASE 5 — Real publication data migration foundation
+Status: READY / WAITING FOR VERIFIED SOURCE DATA
 
-Wait for verified source material:
+Completed preparation:
+
+- Existing Excel → JSON importer upgraded for real publication migration
+- `--check` dry validation mode added
+- ISBN-10 / ISBN-13 format and checksum validation added
+- Duplicate book id / ISBN / verification code protection added
+- Publication date format validation added
+- Optional digital-library metadata supported
+- Existing legacy book records remain compatible
+- `PUBLISHING_DATA_GUIDE.md` created
+- `data/templates/books-template.csv` created
+
+Waiting for verified source material:
 
 - Book title
 - ISBN
@@ -223,12 +245,13 @@ Wait for verified source material:
 Do not fabricate missing values.
 
 ### PHASE 6 — Publishing operations
+Status: NEXT
 
-- Excel/JSON operating workflow cleanup
-- Future admin-friendly publishing workflow
-- Author/manuscript intake improvements
-- Version/history management
-- Optional backend migration only if justified
+- Clean up Excel/JSON operating workflow without breaking existing imports
+- Build a simpler publication registration workflow for non-developers
+- Improve author/manuscript intake
+- Strengthen version/history management
+- Decide whether a backend/admin layer is justified after real book volume is known
 
 ### PHASE 7 — Global expansion
 
@@ -251,4 +274,4 @@ Do not fabricate missing values.
 
 ## 10. Immediate next action
 
-Proceed to PHASE 4: upgrade the book detail experience while keeping the current `?id=` route and all existing catalog/verification links compatible.
+Proceed to PHASE 6 operating-workflow improvements while PHASE 5 waits for the verified historical publication source material. When the original ISBN/publication records arrive, pause PHASE 6 as needed and perform the PHASE 5 data migration first.
