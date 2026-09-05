@@ -6,116 +6,24 @@
   <title>Official Publication | IPMA Publishing</title>
   <meta name="description" content="IPMA Publishing 공식 ISBN 등록 출판물 상세 정보" />
   <meta name="theme-color" content="#070b16" />
+  <meta property="og:type" content="book" />
+  <meta property="og:title" content="Official Publication | IPMA Publishing" />
+  <meta property="og:description" content="IPMA Publishing 공식 ISBN 등록 출판물 상세 정보" />
   <link rel="stylesheet" href="../../assets/css/style.css" />
   <link rel="stylesheet" href="../../assets/css/book-detail.css" />
+  <link rel="stylesheet" href="../../assets/css/official-publication.css" />
 </head>
 <body>
-<header class="topbar">
-  <div class="container topbar-inner">
-    <a class="brand" href="../../">
-      <div class="logo"><b>IP</b></div>
-      <div><div class="t1">IPMA Publishing</div><div class="t2">Global Digital Publishing</div></div>
-    </a>
-    <nav class="nav">
-      <a class="pill home" href="../../">홈</a>
-      <a class="pill" href="../">eBOOKS</a>
-      <a class="pill" href="../../isbn/">ISBN</a>
-      <a class="pill" href="../../verification/">정본확인</a>
-      <a class="pill" href="../../contact/">문의</a>
-    </nav>
-  </div>
-</header>
-
+<header class="topbar"><div class="container topbar-inner"><a class="brand" href="../../"><div class="logo"><b>IP</b></div><div><div class="t1">IPMA Publishing</div><div class="t2">Global Digital Publishing</div></div></a><nav class="nav" aria-label="공식 출판물 메뉴"><a class="pill home" href="../../">홈</a><a class="pill" href="../">eBOOKS</a><a class="pill" href="../../isbn/">ISBN</a><a class="pill" href="../../verification/">정본확인</a><a class="pill" href="../../contact/">문의</a></nav></div></header>
 <main class="container">
-  <section class="book-detail-hero">
-    <div class="book-cover-panel card">
-      <div class="book-cover-frame">
-        <div class="book-cover-fallback">
-          <small>IPMA PUBLISHING</small>
-          <strong id="coverTitle">OFFICIAL PUBLICATION</strong>
-          <span>ISBN · ARCHIVE · RECORD</span>
-        </div>
-      </div>
-      <div class="book-cover-meta"><span>공식 ISBN 등록 출판물</span></div>
-    </div>
-
-    <div class="book-main-copy">
-      <div class="kicker">OFFICIAL ISBN RECORD</div>
-      <h1 id="title">출판 정보를 불러오는 중입니다.</h1>
-      <p class="lead book-subtitle" id="series"></p>
-      <div class="badges" id="badges"></div>
-      <div class="book-primary-actions">
-        <a class="btn primary" href="../">디지털 라이브러리</a>
-        <a class="btn blue" href="../../isbn/">ISBN 안내</a>
-        <a class="btn" href="../../contact/">문의</a>
-      </div>
-      <div class="book-availability"><span class="availability-dot active"></span><span>국가도서관 ISBN 조회 처리일 기준 원본 목록에서 이관된 공식 등록 기록입니다.</span></div>
-    </div>
-  </section>
-
-  <section class="book-detail-grid">
-    <div class="card pad book-info-panel">
-      <div class="section-head compact"><div><div class="kicker">PUBLICATION INFO</div><h2>공식 출판정보</h2></div></div>
-      <table class="table book-meta-table"><tbody id="info"></tbody></table>
-    </div>
-    <aside class="card pad book-trust-panel">
-      <div class="kicker">SOURCE RECORD</div>
-      <h2>원본 기준</h2>
-      <p class="lead">교재명, ISBN, 등록일(발행일), 출판/저작 값은 검증된 원본 엑셀 목록을 그대로 사용합니다.</p>
-      <div class="book-verification-box"><p class="small">분야와 시리즈는 독자의 탐색을 돕기 위해 IPMA Publishing이 편집 분류한 정보입니다.</p></div>
-    </aside>
-  </section>
-
-  <footer class="footer">
-    <div>© <span data-year></span> IPMA Publishing</div>
-    <div><a href="../">eBOOKS</a> · <a href="../../isbn/">ISBN</a> · <a href="../../contact/">문의</a></div>
-  </footer>
+<section class="book-detail-hero">
+  <div class="book-cover-panel card"><div class="book-cover-frame"><div class="book-cover-fallback"><small>IPMA PUBLISHING</small><strong id="coverTitle">OFFICIAL PUBLICATION</strong><span>ISBN · ARCHIVE · RECORD</span></div></div><div class="book-cover-meta"><span>공식 ISBN 등록 출판물</span></div></div>
+  <div class="book-main-copy"><div class="kicker">OFFICIAL PUBLICATION</div><h1 id="title">출판 정보를 불러오는 중입니다.</h1><p class="lead book-subtitle" id="series"></p><div class="badges" id="badges"></div><div class="official-data-status">검증된 공식 출판 목록과 연결된 페이지입니다.</div><div class="book-primary-actions"><a class="btn primary" href="../">디지털 라이브러리</a><a id="collectionLink" class="btn" href="../">같은 분야 보기</a><a class="btn blue" href="../../verification/">정본 확인</a></div><div class="official-actions"><button id="shareBook" class="btn" type="button">공유하기</button><button id="copyBookLink" class="btn" type="button">링크 복사</button></div><div id="shareNote" class="official-share-note" aria-live="polite"></div></div>
+</section>
+<section class="book-detail-grid"><div class="card pad book-info-panel"><div class="section-head compact"><div><div class="kicker">PUBLICATION INFO</div><h2>공식 출판정보</h2></div></div><table class="table book-meta-table"><tbody id="info"></tbody></table><div class="official-record-note">현재 페이지는 검증된 서명·ISBN·발행일·출판/저작 기록을 중심으로 제공합니다. 표지·저자·소개·목차·전자책 링크는 승인된 자료가 확보되는 순서대로 별도 보강됩니다.</div></div><aside class="card pad book-trust-panel"><div class="kicker">SOURCE RECORD</div><h2>원본 기준</h2><p class="lead">교재명, ISBN, 등록일(발행일), 출판/저작 값은 검증된 원본 출판 목록을 기준으로 표시합니다.</p><div class="book-verification-box"><p class="small">분야와 시리즈는 독자의 탐색을 돕기 위한 IPMA Publishing 편집 분류입니다. 공식 서지정보와 구분하여 운영합니다.</p></div></aside></section>
+<section class="official-related"><div class="section-head"><div><div class="kicker">RELATED PUBLICATIONS</div><h2 class="section-title">같은 분야의 출판물</h2></div><a id="relatedCollectionLink" class="text-link" href="../">분야 전체 보기 →</a></div><div id="relatedBooks" class="official-related-grid"></div></section>
+<section class="official-pagination" aria-label="공식 출판물 이전 다음"><a id="prevBook" class="official-nav-card" href="#"><small>더 최근 발행</small><strong>이동할 도서를 확인하는 중입니다.</strong></a><a id="nextBook" class="official-nav-card" href="#"><small>이전 발행</small><strong>이동할 도서를 확인하는 중입니다.</strong></a></section>
+<footer class="footer"><div>© <span data-year></span> IPMA Publishing</div><div><a href="../">eBOOKS</a> · <a href="../../isbn/">ISBN</a> · <a href="../../verification/">Verification</a> · <a href="../../contact/">문의</a></div></footer>
 </main>
-
-<script src="../../assets/js/app.js"></script>
-<script>
-(function(){
-  const wanted = new URL(location.href).searchParams.get("isbn") || "";
-  const $ = s => document.querySelector(s);
-  const esc = s => String(s ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
-  function parseCsv(text){
-    const rows=[]; let row=[],cell="",quoted=false;
-    for(let i=0;i<text.length;i++){
-      const ch=text[i];
-      if(quoted){ if(ch==='"'&&text[i+1]==='"'){cell+='"';i++;} else if(ch==='"') quoted=false; else cell+=ch; }
-      else { if(ch==='"') quoted=true; else if(ch===','){row.push(cell);cell="";} else if(ch==='\n'){row.push(cell.replace(/\r$/, ""));rows.push(row);row=[];cell="";} else cell+=ch; }
-    }
-    if(cell.length||row.length){row.push(cell);rows.push(row);} if(!rows.length) return [];
-    const h=rows.shift().map(v=>v.trim());
-    return rows.filter(r=>r.some(v=>String(v).trim())).map(r=>{const o={};h.forEach((k,i)=>o[k]=String(r[i]??"").trim());return o;});
-  }
-  const row = (k,v)=>`<tr><th>${esc(k)}</th><td>${v}</td></tr>`;
-  fetch("../../data/official-publications.csv",{cache:"no-store"})
-    .then(r=>{if(!r.ok) throw new Error("load"); return r.text();})
-    .then(t=>{
-      const rec=parseCsv(t).find(r=>r.isbn===wanted);
-      if(!rec) throw new Error("notfound");
-      document.title=`${rec.title} | IPMA Publishing`;
-      $("#title").textContent=rec.title;
-      $("#coverTitle").textContent=rec.title;
-      $("#series").textContent=rec.series || "";
-      $("#badges").innerHTML=[rec.category,rec.series,"한국어","ISBN 등록"].filter(Boolean).map(v=>`<span class="badge">${esc(v)}</span>`).join("");
-      $("#info").innerHTML=[
-        row("교재명",`<b>${esc(rec.title)}</b>`),
-        row("ISBN",`<b>${esc(rec.isbn)}</b>`),
-        row("등록일(발행일)",esc(rec.publish_date)),
-        row("출판/저작",esc(rec.publisher_copyright)),
-        row("분야",esc(rec.category)),
-        row("시리즈",esc(rec.series)),
-        row("언어","한국어")
-      ].join("");
-    })
-    .catch(()=>{
-      $("#title").textContent="등록 정보를 찾을 수 없습니다.";
-      $("#series").textContent="ISBN 링크를 확인해 주세요.";
-      $("#info").innerHTML=row("ISBN",esc(wanted||"(없음)"));
-    });
-})();
-</script>
-</body>
-</html>
+<script src="../../assets/js/app.js"></script><script src="../../assets/js/official-publication.js"></script>
+</body></html>
