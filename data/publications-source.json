@@ -1,0 +1,27 @@
+{
+  "source": "국제경찰무도연합회_교재목록(2).xlsx",
+  "source_note": "등록일(발행일)은 첨부된 국가도서관 ISBN 조회 화면의 처리일을 기준으로 작성",
+  "validated_on": "2026-09-05",
+  "record_count": 185,
+  "validation": {"isbn13_checksum_errors": 0, "duplicate_isbn": 0, "duplicate_titles": 0},
+  "records": [
+    {"title":"ACTS 평가·인증·기록관리 시스템","isbn":"979-11-24175-74-3","publish_date":"2026-08-14","publisher_copyright":"(사)국제경찰무도연합회","source_row":5},
+    {"title":"ACTS 선교철학과 신앙정신","isbn":"979-11-24175-61-3","publish_date":"2026-08-14","publisher_copyright":"(사)국제경찰무도연합회","source_row":6},
+    {"title":"ACTS 재정·후원·투명경영 지침서","isbn":"979-11-24175-73-6","publish_date":"2026-08-13","publisher_copyright":"(사)국제경찰무도연합회","source_row":7},
+    {"title":"ACTS 윤리·안전·위기관리 지침서","isbn":"979-11-24175-72-9","publish_date":"2026-08-13","publisher_copyright":"(사)국제경찰무도연합회","source_row":8},
+    {"title":"ACTS 문화와 국제교류를 통한 선교","isbn":"979-11-24175-71-2","publish_date":"2026-08-13","publisher_copyright":"(사)국제경찰무도연합회","source_row":9},
+    {"title":"ACTS 다음 세대를 위한 ACTS","isbn":"979-11-24175-70-5","publish_date":"2026-08-13","publisher_copyright":"(사)국제경찰무도연합회","source_row":10},
+    {"title":"ACTS 디지털·온라인 선교교육","isbn":"979-11-24175-69-9","publish_date":"2026-08-13","publisher_copyright":"(사)국제경찰무도연합회","source_row":11},
+    {"title":"ACTS 교육이 선교가 되다","isbn":"979-11-24175-68-2","publish_date":"2026-08-13","publisher_copyright":"(사)국제경찰무도연합회","source_row":12},
+    {"title":"ACTS 스포츠와 무도가 선교가 되다","isbn":"979-11-24175-67-5","publish_date":"2026-08-13","publisher_copyright":"(사)국제경찰무도연합회","source_row":13},
+    {"title":"ACTS 재능이 선교가 되다","isbn":"979-11-24175-66-8","publish_date":"2026-08-13","publisher_copyright":"(사)국제경찰무도연합회","source_row":14},
+    {"title":"ACTS 사람을 세우는 선교","isbn":"979-11-24175-65-1","publish_date":"2026-08-13","publisher_copyright":"(사)국제경찰무도연합회","source_row":15},
+    {"title":"선교사·지도자 훈련교범","isbn":"979-11-24175-64-4","publish_date":"2026-08-13","publisher_copyright":"(사)국제경찰무도연합회","source_row":16},
+    {"title":"ACTS 국제선교 운영 매뉴얼","isbn":"979-11-24175-63-7","publish_date":"2026-08-13","publisher_copyright":"(사)국제경찰무도연합회","source_row":17},
+    {"title":"ACTS 정관·조직·행정 운영지침","isbn":"979-11-24175-62-0","publish_date":"2026-08-13","publisher_copyright":"(사)국제경찰무도연합회","source_row":18},
+    {"title":"ACTS MISSION ALLIANCE","isbn":"979-11-24175-60-6","publish_date":"2026-08-13","publisher_copyright":"(사)국제경찰무도연합회","source_row":19},
+    {"title":"DOUBLE CROSS","isbn":"979-11-24175-59-0","publish_date":"2026-01-30","publisher_copyright":"(사)국제경찰무도연합회","source_row":20}
+  ],
+  "migration_status": "PARTIAL_IMPORT_FOR_PIPELINE_CONFIRMATION",
+  "migration_note": "원본 185건 전체 검증 완료. 이 파일에는 파이프라인 확인을 위해 선두 16건을 우선 기록했으며, 전체 공개 카탈로그 이관 전 분야/시리즈 분류를 진행한다."
+}
