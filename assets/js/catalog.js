@@ -1,16 +1,25 @@
 (function () {
   const grid = document.querySelector("#catalogGrid");
+  const empty = document.querySelector("#catalogEmpty");
   const meta = document.querySelector("#catalogMeta");
+  const resultMeta = document.querySelector("#catalogResultMeta");
+  const searchInput = document.querySelector("#catalogSearch");
+  const categoryFilter = document.querySelector("#categoryFilter");
+  const formatFilter = document.querySelector("#formatFilter");
+  const sortFilter = document.querySelector("#sortFilter");
+  const resetButton = document.querySelector("#resetFilters");
   if (!grid) return;
 
   const DATA_URL = "../data/books.json";
+  let allBooks = [];
 
   function esc(s) {
     return String(s ?? "")
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
       .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;");
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
 
   async function load() {
@@ -19,48 +28,176 @@
     return await res.json();
   }
 
-  function card(b) {
-    const href = `./book/?id=${encodeURIComponent(b.id)}`;
-    const cover = b.cover || "../assets/images/placeholders/cover-default.jpg";
-    const pub = b.publish_date && b.publish_date !== "TBD" ? b.publish_date : "발행 예정";
+  function normalized(value) {
+    return String(value || "").trim().toLowerCase();
+  }
+
+  function cleanDate(value) {
+    if (!value || value === "TBD") return "";
+    return /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : "";
+  }
+
+  function publicationLabel(book) {
+    return cleanDate(book.publish_date) ? book.publish_date : "발행 예정";
+  }
+
+  function statusLabel(book) {
+    if (book.status) return book.status;
+    if (book.edition && normalized(book.edition).includes("draft")) return "준비 중";
+    return cleanDate(book.publish_date) ? "발행" : "예정";
+  }
+
+  function formatTags(value) {
+    return String(value || "")
+      .split("/")
+      .map(v => v.trim())
+      .filter(Boolean);
+  }
+
+  function searchableText(book) {
+    const authors = Array.isArray(book.authors) ? book.authors.join(" ") : (book.author || "");
+    const keywords = Array.isArray(book.keywords) ? book.keywords.join(" ") : "";
+    return normalized([
+      book.title,
+      book.subtitle,
+      book.series,
+      book.category,
+      book.format,
+      book.isbn,
+      book.language,
+      authors,
+      keywords,
+      book.summary
+    ].filter(Boolean).join(" "));
+  }
+
+  function optionValues(books, field, splitter) {
+    const set = new Set();
+    books.forEach(book => {
+      const raw = book[field];
+      const values = splitter ? splitter(raw) : [raw];
+      values.filter(Boolean).forEach(v => set.add(String(v).trim()));
+    });
+    return Array.from(set).sort((a, b) => a.localeCompare(b, "ko"));
+  }
+
+  function fillSelect(select, values, firstLabel) {
+    if (!select) return;
+    const current = select.value;
+    select.innerHTML = `<option value="">${esc(firstLabel)}</option>` + values.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join("");
+    if (values.includes(current)) select.value = current;
+  }
+
+  function coverMarkup(book) {
+    const cover = book.cover || "../assets/images/placeholders/cover-default.jpg";
     return `
-      <a class="item" href="${href}" style="display:block;">
-        <div style="display:flex; gap:12px; align-items:flex-start;">
-          <img src="${esc(cover)}" alt="${esc(b.title)} 표지"
-               style="width:74px; height:98px; object-fit:cover; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.25);" />
-          <div style="min-width:0;">
-            <h3 style="margin:0 0 6px; font-size:15px;">${esc(b.title)}</h3>
-            <p style="margin:0; color:rgba(255,255,255,.72); font-size:12px; line-height:1.45;">
-              ${esc(b.subtitle || "")}
-            </p>
-            <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
-              <span class="badge">${esc(b.series || "—")}</span>
-              <span class="badge">${esc(b.edition || "—")}</span>
-              <span class="badge">${esc(b.version || "—")}</span>
-              <span class="badge">${esc(pub)}</span>
-            </div>
+      <div class="library-cover-wrap">
+        <img class="library-cover" src="${esc(cover)}" alt="${esc(book.title || "도서")} 표지" loading="lazy" />
+        <span class="library-status">${esc(statusLabel(book))}</span>
+      </div>
+    `;
+  }
+
+  function card(book) {
+    const href = `./book/?id=${encodeURIComponent(book.id || "")}`;
+    const pub = publicationLabel(book);
+    const formats = formatTags(book.format);
+    const primaryFormat = formats[0] || "Publication";
+    const isbn = book.isbn ? `<span class="library-meta-line">ISBN ${esc(book.isbn)}</span>` : "";
+    const language = book.language ? `<span class="library-meta-line">${esc(book.language)}</span>` : "";
+    const featured = book.featured ? `<span class="badge library-featured">추천</span>` : "";
+    const newRelease = book.new_release ? `<span class="badge library-new">NEW</span>` : "";
+
+    return `
+      <a class="library-book-card" href="${href}">
+        ${coverMarkup(book)}
+        <div class="library-book-body">
+          <div class="library-book-flags">${newRelease}${featured}</div>
+          <p class="library-eyebrow">${esc(book.category || "IPMA Publishing")}</p>
+          <h3>${esc(book.title || "제목 미정")}</h3>
+          <p class="library-subtitle">${esc(book.subtitle || book.summary || "")}</p>
+          <div class="library-book-meta">
+            <span>${esc(primaryFormat)}</span>
+            <span>${esc(pub)}</span>
+            ${language}
+            ${isbn}
+          </div>
+          <div class="library-book-bottom">
+            <span>${esc(book.series || "독립 출판")}</span>
+            <strong>상세보기 →</strong>
           </div>
         </div>
       </a>
     `;
   }
 
+  function compareBooks(a, b, sortMode) {
+    if (sortMode === "title") return String(a.title || "").localeCompare(String(b.title || ""), "ko");
+    if (sortMode === "series") {
+      const seriesCompare = String(a.series || "").localeCompare(String(b.series || ""), "ko");
+      return seriesCompare || String(a.title || "").localeCompare(String(b.title || ""), "ko");
+    }
+
+    const aDate = cleanDate(a.publish_date);
+    const bDate = cleanDate(b.publish_date);
+    if (aDate && bDate) return bDate.localeCompare(aDate);
+    if (aDate) return -1;
+    if (bDate) return 1;
+    return String(a.title || "").localeCompare(String(b.title || ""), "ko");
+  }
+
+  function applyFilters() {
+    const q = normalized(searchInput?.value);
+    const category = categoryFilter?.value || "";
+    const format = formatFilter?.value || "";
+    const sortMode = sortFilter?.value || "newest";
+
+    const filtered = allBooks
+      .filter(book => !q || searchableText(book).includes(q))
+      .filter(book => !category || String(book.category || "") === category)
+      .filter(book => !format || formatTags(book.format).includes(format))
+      .sort((a, b) => compareBooks(a, b, sortMode));
+
+    grid.innerHTML = filtered.map(card).join("");
+    if (empty) empty.hidden = filtered.length !== 0;
+    if (resultMeta) resultMeta.textContent = `현재 ${filtered.length}권 표시`;
+  }
+
+  function bindEvents() {
+    searchInput?.addEventListener("input", applyFilters);
+    categoryFilter?.addEventListener("change", applyFilters);
+    formatFilter?.addEventListener("change", applyFilters);
+    sortFilter?.addEventListener("change", applyFilters);
+    resetButton?.addEventListener("click", () => {
+      if (searchInput) searchInput.value = "";
+      if (categoryFilter) categoryFilter.value = "";
+      if (formatFilter) formatFilter.value = "";
+      if (sortFilter) sortFilter.value = "newest";
+      applyFilters();
+      searchInput?.focus();
+    });
+  }
+
   (async () => {
     try {
       const data = await load();
-      const books = data.books || [];
-      grid.innerHTML = books.map(card).join("");
-      if (meta) meta.textContent = `업데이트: ${data.updated || "-"} · 총 ${books.length}권`;
+      allBooks = Array.isArray(data.books) ? data.books : [];
+
+      fillSelect(categoryFilter, optionValues(allBooks, "category"), "전체 분야");
+      fillSelect(formatFilter, optionValues(allBooks, "format", formatTags), "전체 형태");
+
+      if (meta) meta.textContent = `업데이트 ${data.updated || "-"} · 등록 ${allBooks.length}권`;
+      bindEvents();
+      applyFilters();
     } catch (e) {
       grid.innerHTML = `
-        <div class="item">
-          <h3 style="margin:0 0 6px;">목록 로딩 오류</h3>
-          <p style="margin:0; color:rgba(255,255,255,.72); font-size:13px;">
-            /data/books.json 경로 또는 파일을 확인해 주세요.
-          </p>
+        <div class="library-empty card pad">
+          <h3>도서 정보를 불러오지 못했습니다.</h3>
+          <p>잠시 후 다시 시도하거나 IPMA Publishing에 문의해 주세요.</p>
         </div>
       `;
-      if (meta) meta.textContent = "업데이트 정보를 불러오지 못했습니다.";
+      if (meta) meta.textContent = "도서 정보를 불러오지 못했습니다.";
+      if (resultMeta) resultMeta.textContent = "";
     }
   })();
 })();
