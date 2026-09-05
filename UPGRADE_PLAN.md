@@ -44,16 +44,19 @@ Core routes and infrastructure now include:
 - `data/official-publications.csv`
 - `data/publications-source.json`
 - `data/verify.json`
+- `data/templates/multilingual-editions-template.csv`
 - `assets/js/catalog.js`
 - `assets/js/operations.js`
 - `assets/js/verify.js`
 - `assets/css/style.css`
 - `assets/css/book-detail.css`
+- `assets/css/catalog-stability.css`
 - `assets/css/operations.css`
 - `ools/xlsx_to_json.py`
 - `PUBLISHING_DATA_GUIDE.md`
 - `OPERATIONS_GUIDE.md`
 - `OFFICIAL_PUBLICATION_TAXONOMY.md`
+- `GLOBAL_PUBLISHING_GUIDE.md`
 
 ## 3. Preservation rules
 
@@ -82,6 +85,7 @@ Digital Library supports optional fields including:
 - `download_policy`
 - `rights`
 - `updated_at`
+- multilingual/localized metadata containers for future approved translations
 
 Official historical publications are stored separately from enriched digital-book records so verified bibliographic facts are not confused with editorial/eBook metadata.
 
@@ -99,14 +103,17 @@ Primary hierarchy:
 8. ABOUT
 9. CONTACT
 
-Secondary / operational routes:
+Secondary public routes:
 
 - Distribution
 - Resources
 - News
 - Media
 - Imprints
-- Publishing Operations
+
+Internal/operational route:
+
+- Publishing Operations (`/operations/`) — intentionally removed from public homepage navigation and marked `noindex,nofollow`; direct URL remains available for operating use.
 
 ## 6. Image asset plan
 
@@ -164,34 +171,34 @@ Future additions must continue to use verified source material only.
 ### PHASE 6 — Publishing operations
 Status: COMPLETE — FOUNDATION
 
+Implemented browser-side registration workspace, ISBN/date validation, JSON/CSV generation and operating guidance. Direct public GitHub write-back remains disabled because there is no authenticated backend.
+
+### PHASE 7 — Global expansion foundation
+Status: COMPLETE — FOUNDATION
+
 Implemented:
 
-- `/operations/` browser-side registration workspace.
-- Non-developer form for title, ISBN, date, publisher/copyright, category, series, language, author and digital links.
-- ISBN-10 / ISBN-13 checksum validation in the browser.
-- Publication date format validation.
-- JSON record generation.
-- JSON download.
-- CSV download.
-- Copy-to-clipboard workflow.
-- Missing/invalid URL protection.
-- Explicit warning that the static page does not write directly to GitHub.
-- `OPERATIONS_GUIDE.md` operating procedure.
-- Homepage secondary link to Publishing Operations.
+- Korean / English / Chinese-ready metadata strategy.
+- Language-aware Digital Library filtering.
+- Multilingual search metadata support.
+- Source-edition to translated-edition relationship rules.
+- `data/templates/multilingual-editions-template.csv`.
+- `GLOBAL_PUBLISHING_GUIDE.md`.
+- Rule that translated editions receive their own verified ISBN only when officially assigned.
+- Korean source records remain unchanged until approved translation metadata exists.
 
-Current decision: do not add direct public GitHub write-back. The site has no authenticated backend, so direct browser writes would be inappropriate. Revisit only if publication volume justifies an authenticated admin/backend layer.
+### PHASE 8 — Integrated stability audit
+Status: COMPLETE — FIRST PASS
 
-### PHASE 7 — Global expansion
-Status: NEXT
+Audit and fixes completed:
 
-Planned:
-
-- Korean / English / Chinese-ready metadata.
-- Multilingual edition relationships.
-- International distribution metadata.
-- International SEO and Open Graph improvements.
-- Structured book metadata for search engines.
-- Language-aware Digital Library browsing without breaking current Korean content.
+- Catalog now uses generated fallback covers for official records and missing placeholder covers, preventing broken-card visuals while production images are pending.
+- Language filter now includes legacy Korean records consistently.
+- Internal Publishing Operations route removed from public homepage navigation.
+- Publishing Operations page marked `noindex,nofollow`.
+- Placeholder `YOUR_GITHUB_ID` removed from `sitemap.xml` and `robots.txt`.
+- Public sitemap refreshed with actual repository Pages host and public routes only.
+- Existing catalog, official publication detail, ISBN and Verification route structure preserved.
 
 ## 8. Non-regression rules
 
@@ -202,8 +209,9 @@ Planned:
 - Do not break `books.json` or official-publication catalog loading.
 - Do not break direct Verification queries.
 - Do not overwrite approved production images or historical records without source confirmation.
+- Do not expose unauthenticated internal operating tools as primary public navigation.
 - Each phase should remain independently testable and reversible.
 
 ## 9. Immediate next action
 
-Proceed to PHASE 7: prepare multilingual metadata and international discovery while keeping Korean content and the 185-record official publication dataset intact.
+Move from foundation work to content completion: connect approved production imagery, enrich the highest-priority official publications with verified covers/descriptions/eBook links, and then add approved English/Chinese editions when source translations and ISBN facts are available.
